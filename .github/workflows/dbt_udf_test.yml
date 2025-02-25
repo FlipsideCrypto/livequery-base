@@ -58,5 +58,5 @@ jobs:
     secrets: inherit
     with:
       warehouse: ${{ vars.WAREHOUSE }}
-      environment: dev
+      environment: ${{ github.ref == 'refs/heads/main' && 'workflow_prod' || 'workflow_dev' }}
       command: dbt test --selector test_udfs --threads 24
