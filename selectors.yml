@@ -3,7 +3,7 @@ selectors:
     definition:
       union:
         - method: package
-          value: livequery_models
+          value: livequery_base
         - exclude:
           - livequery_models.deploy.marketplace.quicknode.test_quicknode_solana*
           - livequery_models.deploy.marketplace.quicknode.test_quicknode_polygon*

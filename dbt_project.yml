@@ -32,8 +32,7 @@ models:
         +tags: core
         secrets:
           +enabled: '{{ true if env_var("ENABLE_SNOWFLAKE_SECRETS", "") else false }}'
-      evm:
-        +tags: evm
+      
 
 
 tests:

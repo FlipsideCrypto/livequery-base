@@ -160,4 +160,25 @@
     SELECT '{{ model.schema }}' as schema_
 {%- endmacro -%}
 
-
+{% macro ephemeral_deploy_marketplace(configs) %}
+{#
+    This macro is used to deploy functions using ephemeral models.
+    It should only be used within an ephemeral model.
+ #}
+    {%- set schema = this.schema -%}
+    {%- set utility_schema = this.identifier -%}
+    {% if execute and (var("UPDATE_UDFS_AND_SPS") or var("DROP_UDFS_AND_SPS")) and model.unique_id in selected_resources %}
+        {% set sql %}
+            {% for config in configs %}
+                {{- crud_udfs_by_marketplace(config, schema, utility_schema, var("DROP_UDFS_AND_SPS")) -}}
+            {%- endfor -%}
+        {%- endset -%}
+        {%- if var("DROP_UDFS_AND_SPS") -%}
+            {%- do log("Drop marketplace udfs: " ~ this.database ~ "." ~ schema, true) -%}
+        {%- else -%}
+            {%- do log("Deploy marketplace udfs: " ~ this.database ~ "." ~ schema, true) -%}
+        {%- endif -%}
+        {%- do run_query(sql ~ apply_grants_by_schema(schema)) -%}
+    {%- endif -%}
+    SELECT '{{ model.schema }}' as schema_
+{%- endmacro -%}
