@@ -12,7 +12,7 @@ on:
           - dev
           - prod
           - hosted
-        default: dev
+        default: workflow_dev
       warehouse:
         type: choice
         description: Snowflake warehouse
