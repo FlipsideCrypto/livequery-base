@@ -9,9 +9,9 @@ on:
         description: DBT Run Environment
         required: true
         options:
-          - dev
-          - prod
-          - hosted
+          - workflow_dev
+          - workflow_prod
+          - workflow_hosted
         default: workflow_dev
       warehouse:
         type: choice
